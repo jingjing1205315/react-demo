@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>  
+    <title>Document</title>
+    <style>
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">        
+        function Login(props){
+            return <button onClick={props.updateUser}>登录</button>
+        }
+        function Logout(props){
+            return <button onClick={props.updateUser}>登出</button>
+        }
+        class Hello extends React.Component{ // 正常组件，有生命周期
+            state = {
+                name: 'LiMing',
+                isLogin: false
+            }
+            updateUser = ()=> { // react组件中普通的方法中的this指向undefined 可以用箭头函数
+                this.setState({
+                    isLogin: !this.state.isLogin
+                })
+            }
+            
+            render(){
+                const {isLogin} = this.state;
+                let button;
+                if(isLogin){ // 条件判断button为登录还是登出，也可用三目
+                    button = <Login updateUser={this.updateUser}/> // 向子组件传递自定义事件，子组件可通过出发传递的事件来修改父组件的state
+                }else{
+                    button = <Logout updateUser={this.updateUser}/>
+                }
+                return <div>
+                    <h1 className="red">hello { this.state.name}</h1>
+                    {button}
+                </div>
+            }
+        }
+        ReactDOM.render(
+            <Hello time="晚上" name='LiMing' />,
+            document.getElementById('app'));
+    </script>
+</body>
+</html>

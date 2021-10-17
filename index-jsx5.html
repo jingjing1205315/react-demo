@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>  
+    <title>Document</title>
+    <style>
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">        
+        class Hello extends React.Component{ // 正常组件，有生命周期
+            constructor(props){
+                console.log('初始化阶段')
+                // 初始化props
+                super(props)
+                // 初始化状态
+                this.state = {
+                    name: 'Liming',
+                    time: '晚上'
+                }
+                // this.updateUser = this.updateUser.bind(this);
+            }
+            
+            updateUser () { // react组件中普通的方法中的this指向undefined 可以用箭头函数
+                console.log(this) // undefined
+                this.setState({
+                    name: 'Tim'
+                })
+            }
+            
+            render(){
+                console.log('组件加载或组件更新')
+                return <div>
+                    <h1 className="red">hello { this.state.name}</h1>
+                    <h2>现在是：{ this.state.time}</h2>
+                    <button onClick={() => this.updateUser()} >更新</button>
+                    <button onClick={this.updateUser.bind(this)} >更新</button>
+                </div>
+            }
+        }
+        ReactDOM.render(
+            <Hello time="晚上" name='LiMing' />,
+            document.getElementById('app'));
+    </script>
+</body>
+</html>
